@@ -1,5 +1,22 @@
-// Vehicle.java - Base class (encapsulation and inheritance)
-public class Vehicle {
+public class Main {
+    public static void main(String[] args) {
+        RentalService service = new RentalService();
+
+        Vehicle car = new Car("Toyota", "Corolla", 2020, 5);
+        Vehicle bike = new Bike("Honda", "CG 125", 2019, true);
+        Vehicle truck = new Truck("Suzuki", "Bolan", 2021, 1.5);
+
+        service.rentVehicle(car, 3);
+        service.rentVehicle(bike, 2);
+        service.rentVehicle(truck, 5);
+
+        // Try renting already rented vehicle
+        service.rentVehicle(car, 1);
+    }
+}
+
+// ------------------- Vehicle Base Class -------------------
+class Vehicle {
     private String make;
     private String model;
     private int year;
@@ -12,7 +29,6 @@ public class Vehicle {
         this.isRented = false;
     }
 
-    // Encapsulated getters and setters
     public String getMake() { return make; }
     public void setMake(String make) { this.make = make; }
 
@@ -25,9 +41,8 @@ public class Vehicle {
     public boolean isRented() { return isRented; }
     public void setRented(boolean rented) { isRented = rented; }
 
-    // Polymorphic method
     public double calculateRentalCost(int days) {
-        return days * 1000.0; // Base cost in PKR
+        return days * 1000.0;
     }
 
     @Override
@@ -36,8 +51,8 @@ public class Vehicle {
     }
 }
 
-// Car.java - Subclass (inheritance and polymorphism)
-public class Car extends Vehicle {
+// ------------------- Car Class -------------------
+class Car extends Vehicle {
     private int seats;
 
     public Car(String make, String model, int year, int seats) {
@@ -45,17 +60,14 @@ public class Car extends Vehicle {
         this.seats = seats;
     }
 
-    public int getSeats() { return seats; }
-    public void setSeats(int seats) { this.seats = seats; }
-
     @Override
     public double calculateRentalCost(int days) {
-        return days * 2500.0; // PKR for cars like Corolla
+        return days * 2500.0;
     }
 }
 
-// Bike.java - Subclass (inheritance and polymorphism)
-public class Bike extends Vehicle {
+// ------------------- Bike Class -------------------
+class Bike extends Vehicle {
     private boolean hasGear;
 
     public Bike(String make, String model, int year, boolean hasGear) {
@@ -63,17 +75,14 @@ public class Bike extends Vehicle {
         this.hasGear = hasGear;
     }
 
-    public boolean hasGear() { return hasGear; }
-    public void setHasGear(boolean hasGear) { this.hasGear = hasGear; }
-
     @Override
     public double calculateRentalCost(int days) {
-        return days * 600.0; // PKR for bikes like CG 125
+        return days * 600.0;
     }
 }
 
-// Truck.java - Subclass (inheritance and polymorphism)
-public class Truck extends Vehicle {
+// ------------------- Truck Class -------------------
+class Truck extends Vehicle {
     private double loadCapacity;
 
     public Truck(String make, String model, int year, double loadCapacity) {
@@ -81,45 +90,22 @@ public class Truck extends Vehicle {
         this.loadCapacity = loadCapacity;
     }
 
-    public double getLoadCapacity() { return loadCapacity; }
-    public void setLoadCapacity(double loadCapacity) { this.loadCapacity = loadCapacity; }
-
     @Override
     public double calculateRentalCost(int days) {
-        return days * 5500.0; // PKR for trucks like Bolan
+        return days * 5500.0;
     }
 }
 
-// RentalService.java - Demonstrates polymorphism
-public class RentalService {
+// ------------------- RentalService Class -------------------
+class RentalService {
     public void rentVehicle(Vehicle vehicle, int days) {
         if (!vehicle.isRented()) {
             vehicle.setRented(true);
-            double cost = vehicle.calculateRentalCost(days); // Polymorphic call
+            double cost = vehicle.calculateRentalCost(days);
             System.out.println("Rented: " + vehicle.toString());
-            System.out.println("Rental cost for " + days + " days: " + cost + " PKR");
+            System.out.println("Rental cost for " + days + " days: " + cost + " PKR\n");
         } else {
             System.out.println("Vehicle is already rented: " + vehicle.toString());
         }
-    }
-}
-
-// Main.java - Entry point
-public class Main {
-    public static void main(String[] args) {
-        RentalService service = new RentalService();
-
-        // Pakistani vehicles
-        Vehicle car = new Car("Toyota", "Corolla", 2020, 5);
-        Vehicle bike = new Bike("Honda", "CG 125", 2019, true);
-        Vehicle truck = new Truck("Suzuki", "Bolan", 2021, 1.5);
-
-        // Polymorphism in action
-        service.rentVehicle(car, 3);
-        service.rentVehicle(bike, 2);
-        service.rentVehicle(truck, 5);
-
-        // Try renting already rented vehicle
-        service.rentVehicle(car, 1);
     }
 }
